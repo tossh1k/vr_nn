@@ -139,7 +139,6 @@ pytest tests/ -v
 ├── README.md                 # Документация
 ├── requirements.txt          # Зависимости
 ├── example_usage.py          # Примеры использования
-├── run_visualizer.py         # Запуск графического интерфейса
 ├── src/                      # Исходный код
 │   ├── __init__.py
 │   ├── text_generator.py     # Генератор текста (LLM)
