@@ -1,0 +1,24 @@
+# Core dependencies
+torch>=2.0.0
+transformers>=4.30.0
+diffusers>=0.20.0
+accelerate>=0.20.0
+
+# LLM specific
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+# Stable Diffusion specific
+controlnet-aux>=0.0.6
+pillow>=9.0.0
+opencv-python>=4.7.0
+
+# Utilities
+numpy>=1.24.0
+pyyaml>=6.0
+tqdm>=4.65.0
+logging>=0.4.9
+
+# Testing
+pytest>=7.3.0
+pytest-cov>=4.1.0

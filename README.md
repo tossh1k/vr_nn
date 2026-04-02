@@ -56,7 +56,99 @@ pip install -r requirements.txt
 
 ## Использование
 
-Пример использования системы для генерации контента с контролем целостности.
+### Быстрый старт
+
+```python
+from src import TextZoneGenerator, TextureGenerator, IntegrityChecker
+
+# Инициализация генераторов
+text_gen = TextZoneGenerator()
+texture_gen = TextureGenerator()
+checker = IntegrityChecker(text_gen, texture_gen)
+
+# Генерация текста с проверкой целостности
+zone = text_gen.generate_zone(
+    zone_id="zone_001",
+    prompt="Тёмный коридор с деревянными стенами",
+    timestamp="10:00"
+)
+
+# Проверка целостности текста
+result = text_gen.check_integrity(zone)
+print(f"Валидно: {result.is_valid}")
+print(f"Оценка согласованности: {result.consistency_score}")
+
+# Генерация текстуры с требуемыми деталями
+texture = texture_gen.generate_texture(
+    texture_id="door_001",
+    prompt="Деревянная дверь в старом доме",
+    required_details=["ручка двери", "замок"]
+)
+
+# Проверка наличия деталей
+detail_result = texture_gen.check_details(texture)
+print(f"Обнаруженные детали: {detail_result.detected_details}")
+print(f"Отсутствующие детали: {detail_result.missing_details}")
+```
+
+### Генерация с автоматической валидацией
+
+```python
+from src import IntegrityChecker
+
+checker = IntegrityChecker()
+
+# Генерация текста с автоматической проверкой
+content, result = checker.generate_with_validation(
+    modality="text",
+    zone_id="zone_002",
+    prompt="Загадочная комната с древними артефактами",
+    timestamp="10:15"
+)
+
+if result.is_valid:
+    print("Генерация успешна!")
+else:
+    print(f"Проблемы: {result.issues}")
+    print(f"Рекомендации: {result.suggestions}")
+
+# Генерация текстуры с автоматической проверкой
+texture, texture_result = checker.generate_with_validation(
+    modality="texture",
+    texture_id="room_001",
+    prompt="Древняя комната с каменными стенами",
+    required_details=["факел", "каменная текстура"]
+)
+```
+
+### Запуск примеров
+
+```bash
+# Запустить демонстрационный скрипт
+python example_usage.py
+
+# Запустить тесты
+pip install pytest
+pytest tests/ -v
+```
+
+## Структура проекта
+
+```
+.
+├── README.md                 # Документация
+├── requirements.txt          # Зависимости
+├── example_usage.py          # Примеры использования
+├── src/                      # Исходный код
+│   ├── __init__.py
+│   ├── text_generator.py     # Генератор текста (LLM)
+│   ├── texture_generator.py  # Генератор текстур (SD + ControlNet)
+│   └── integrity_checker.py  # Проверка целостности
+├── tests/                    # Тесты
+│   └── test_generators.py
+├── configs/                  # Конфигурационные файлы
+└── models/                   # Модели (при локальном использовании)
+```
 
 ## Лицензия
 
